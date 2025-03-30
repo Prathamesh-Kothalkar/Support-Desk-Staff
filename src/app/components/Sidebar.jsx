@@ -44,7 +44,8 @@ export default function Sidebar() {
                          onClick={()=>router.push("/dashboard")}>
                             <Home className="w-5 h-5 mr-2"  /> Hello, {user?.name || "Guest"}
                         </li>
-                        <li className="flex items-center text-black p-2 rounded-md hover:bg-gray-200 cursor-pointer">
+                        <li className="flex items-center text-black p-2 rounded-md hover:bg-gray-200 cursor-pointer"
+                        onClick={()=>router.push("/issues")}>
                             <Ticket className="w-5 h-5 mr-2" /> Tickets
                         </li>
                         <li className="flex items-center text-black p-2 rounded-md hover:bg-gray-200 cursor-pointer"

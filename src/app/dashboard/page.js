@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Sidebar from "../components/Sidebar";
+import axios from "axios";
 
 export default function SupportDeskDashboard() {
     const { data: session, status } = useSession();
@@ -11,10 +12,31 @@ export default function SupportDeskDashboard() {
         if (status === "authenticated") {
             setUser(session?.user);
             console.log(user);
+            fetchIssues();
         } else {
             setUser(null);
         }
     }, [status, session]);
+
+    async function fetchIssues() {
+        try{
+            const response=await axios.get("/api/issue", {
+                headers: {
+                    Authorization: `Bearer ${session?.user?.token}`,
+                },
+            });
+            console.log(response.data);
+            if (response.data.success) {
+                console.log("Issues fetched successfully:", response.data.issues);
+            } else {
+                console.error("Failed to fetch issues:", response.data.error);
+            }
+        }
+        catch (error) {
+            console.error("Error fetching issues:", error);
+        }
+
+    }
 
     return (
         <div className="flex h-screen bg-gray-100">
