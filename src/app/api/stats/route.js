@@ -27,18 +27,12 @@ export async function GET() {
     let totalIssues = 0;
     let recentIssues=issues.slice(-5).reverse();
 
-    // Process issues
+  
     for (const issue of issues) {
       totalIssues++;
-
-      // Status count
       statusCount[issue.status] = (statusCount[issue.status] || 0) + 1;
-
-      // Type count
-      issueTypeCount[issue.issueType] = (issueTypeCount[issue.issueType] || 0) + 1;
-
-      // Lab-wise issues
-      const labName = issue.labId.labName;
+      issueTypeCount[issue.issueType] = (issueTypeCount[issue.issueType] || 0) + 1
+      const labName = issue.labId?.labName || "Unknown Lab";
       issuesPerLab[labName] = (issuesPerLab[labName] || 0) + 1;
     }
 
