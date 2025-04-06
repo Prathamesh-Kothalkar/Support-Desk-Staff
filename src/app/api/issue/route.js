@@ -19,8 +19,8 @@ export async function GET(res) {
         }
 
         const userDept = session.user.department;
-        const issues = await Issue.find({ department: userDept }).populate("labId").populate("reportedBy", "name email zprn phone department");
-        
+        const issuess = await Issue.find({ department: userDept }).populate("labId").populate("reportedBy", "name email zprn phone department");
+        let issues=issuess.reverse();
         return NextResponse.json({ success: true, issues });
 
     } catch (error) {
