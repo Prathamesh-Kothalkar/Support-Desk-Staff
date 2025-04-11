@@ -92,7 +92,7 @@ export default function Lab() {
     };
 
     const handleDeleteClick = async (id) => {
-        if (!confirm("Are you sure you want to delete this lab?")) return;
+        if (!confirm("All data realted to this Lab can also be deleted. Are you sure to delete this lab?")) return;
 
         try {
             const response = await fetch(`/api/labs/${id}`, {

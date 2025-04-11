@@ -3,6 +3,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // Ensure the 
 import { connectToDB } from "@/db";
 import Lab from "@/models/labModel";
 import { NextResponse } from "next/server";
+import Issue from "@/models/issueModel";
 
 export async function PUT(req, { params }) {
     //Update lab details
@@ -15,7 +16,7 @@ export async function PUT(req, { params }) {
         }
 
         const userDept = session.user.department;
-        const labId = params.id; // Get the lab ID from the request parameters
+        const labId = await params.id; 
 
         const { labName, totalPCs } = await req.json();
 
@@ -31,8 +32,8 @@ export async function PUT(req, { params }) {
         const updatedLab = await Lab.findByIdAndUpdate(labId, {
             labName,
             totalPCs,
-            workingPCs: totalPCs, // Update working PCs
-            faultyPCs: 0 // Reset faulty PCs
+            workingPCs: totalPCs, 
+            faultyPCs: 0 
         }, { new: true });
 
         if (!updatedLab) {
@@ -58,8 +59,9 @@ export async function DELETE(req, { params }) {
         }
 
         const userDept = session.user.department;
-        const labId = params.id; // Get the lab ID from the request parameters
+        const labId = await params.id; 
 
+        
         const lab = await Lab.findById(labId);
 
         if (!lab) {
@@ -69,7 +71,7 @@ export async function DELETE(req, { params }) {
         if (lab.department !== userDept) {
             return NextResponse.json({ error: "Unauthorized to delete this lab" }, { status: 403 });
         }
-
+        await Issue.deleteMany({labId: labId});
         await Lab.findByIdAndDelete(labId);
 
         return NextResponse.json({ success: true, message: "Lab deleted successfully" }, { status: 200 });

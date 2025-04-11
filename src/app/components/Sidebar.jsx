@@ -42,7 +42,7 @@ export default function Sidebar() {
                     <ul className="space-y-4">
                         <li className="flex items-center text-black p-2 rounded-md hover:bg-gray-200 cursor-pointer"
                          onClick={()=>router.push("/dashboard")}>
-                            <Home className="w-5 h-5 mr-2"  /> Hello, {user?.name || "Guest"}
+                            <Home className="w-5 h-5 mr-2"  /> Hello, {user?.name || "Guest"} ({user?.department || "Login"})
                         </li>
                         <li className="flex items-center text-black p-2 rounded-md hover:bg-gray-200 cursor-pointer"
                         onClick={()=>router.push("/issues")}>

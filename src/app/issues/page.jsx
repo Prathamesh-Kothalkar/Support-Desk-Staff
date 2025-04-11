@@ -75,6 +75,11 @@ export default function IssuesPage() {
     {
       headerName: "Lab Name",
       field: "labId.labName",
+      cellRenderer: (params) => (
+        <span className="text-slate-600">
+          {params.value || "Deleted Lab"}
+        </span>
+      ),
       sortable: true,
       flex: 1,
       cellClass: "ag-cell-custom",
